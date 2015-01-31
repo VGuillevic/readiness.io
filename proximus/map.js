@@ -36,7 +36,7 @@ window.onload = function (){
 	
 	// layout ajsutments
 	
-	var tech_radius_factor = 2;
+	var tech_radius_factor = 5;
 	var bar_max_length = 150; // AJUST BAR SIZE
 	 
 	// vars  
@@ -842,13 +842,15 @@ window.onload = function (){
 		n_startups = 0;
 		n_techs = 0;
 		
-		// hide all techs
+		// reset and hide all techs
 		json.techs.forEach( function(d,i) { 
 			d.visible = false;
+			d.connected = [];
 			$(d.itm).hide();
 			d.container
 					.attr('style','display:none'); 
 		});
+		 
 		 
 		// set visibility 
 		json.startups.forEach( function(d,i) { 
@@ -866,6 +868,8 @@ window.onload = function (){
 							n_techs ++;
 							t.visible = true;
 						} 
+						
+						t.connected.push(d);
 					}
 				});
 				
@@ -954,20 +958,34 @@ window.onload = function (){
 			angle_pos = 0;
 			
 			json.techs.forEach( function(d,i) {   
-				
+					
 				if(d.visible){
 				
+					tech_radius = calc_radius( d.connected.length ); 
 					tech_angle = angle_pos*360/n_techs - 90; 
 					
 					$(d.itm).show();
 					
 					d.container
-						.attr('transform','rotate(' + tech_angle + ')')
+						.attr('transform','rotate(' + tech_angle + ')') 
 						.attr('style',''); 
+					
+					d.circle
+						.attr('r',tech_radius ); 
+					
+					if( tech_angle <= 90 ){  
+						d.label 
+							.attr('transform','translate(' + tech_radius * 1.5 + ' 0 )') 
+
+					}else{ 
+						d.label 
+							.attr('transform','translate(' + tech_radius * 1.5 + ' 0 ) rotate(180)')  
+					}   
 					
 					angle_pos++;
 					
 					d.angle = tech_angle;
+					d.radius = tech_radius;
 				}
 				
 			});
@@ -1734,7 +1752,7 @@ window.onload = function (){
 				}				
 			});	  
 			
-			tech_radius = calc_radius( d.connected.length * 5 );
+			tech_radius = calc_radius( d.connected.length );
 			tech_angle = i*360/n_techs - 90; 
 			tech_delay = i*5;
 			
