@@ -22,7 +22,7 @@
 
 		var destination = "index.html?msg=LOGIN-FAILED";
 		if( get_model ) destination += "&model="+get_model;
-		if( get_startup ) destination += "&startup="+get_startup;
+		if( get_startup ) destination += "&startup="+get_startup; 
 		if( get_tech ) destination += "&tech="+get_tech;
 		if( get_slider ) destination += "&slider="+get_slider;
 
@@ -30,7 +30,14 @@
 	}
 
 
-window.onload = function (){  
+
+
+window.onload = function (){ 
+	
+	// layout ajsutments
+	
+	var tech_radius_factor = 2;
+	var bar_max_length = 150; // AJUST BAR SIZE
 	 
 	// vars  
 	
@@ -63,7 +70,6 @@ window.onload = function (){
 	
 	var readiness_mod = 60; 
 	
-	var bar_max_length = 150;
 	var bar_total = 2;
 	var innovation_scale = 1;
 	var evolution_scale = 1;
@@ -84,11 +90,23 @@ window.onload = function (){
 	var list;
 	
 	var cur_list = null; 
-	var cur_node = null; 
+	var cur_node = null;  
 	
-	// map vars
+	var startup_card_sub = [["founding year","year"],
+							["headquarter","hq"],
+							["country","country"],
+							["state","state"],
+							["city","city"],
+							["company type","type"],
+							["business model","model"],
+							["partnerships","partnerships"],
+							["investors","investors"],
+							["notes","notes"],
+							["total Funding (USA)","funding"],
+							["funding rounds","rounds"],
+							["headcount","headcount"]];
 	
-	var impact_mod = 100; // scale module for startup bars (radar)
+	// map vars 
 	
 	var tech_container;
 	var tech;
@@ -99,7 +117,7 @@ window.onload = function (){
 	var tech_dist;
 	var tech_circle;
 	var tech_label;
-	var techs_max_dist = 120; // techs circle radius
+	var techs_max_dist = 120; 
 	var tech_min_dist = 30;
 	
 	var startup_container;
@@ -130,7 +148,6 @@ window.onload = function (){
 	var itm_lb;
 	var itm_bars;
 	var bar;
-	var total_imapct = 75; // check this!!!!
 	
 	var search_tx;
 	
@@ -148,8 +165,8 @@ window.onload = function (){
 	var only_starred = false;
 	
 	var list_lbs = [ null,
-					[ "techs", "impact", "readiness", "industries" ],
-					[ "startups", "impact", "name", "industries" ]]; 
+					[ "techs", "tech" ],
+					[ "startups", "startup" ]]; 
 	
 	
 	///////////////////////// OBJECTS /////////////////////////
@@ -158,7 +175,6 @@ window.onload = function (){
 	
 	var model_lb = document.getElementById("model_lb"); 
 	var n_startups_lb = document.getElementById("n_startups_lb");
-	console.log(n_startups_lb);
 	var business_lb = document.getElementById("business_lb");  
 	var business_ico = document.getElementById("business_ico");  
 	  
@@ -183,6 +199,16 @@ window.onload = function (){
 	
 	var slider_lb_left = document.getElementById("slider_lb_left"); 
 	var slider_lb_right = document.getElementById("slider_lb_right"); 
+	
+	// ALERT 
+	
+	var alert_msg = document.getElementById("alert_msg"); 
+	var alert_yes = document.getElementById("alert_yes"); 
+	var alert_no = document.getElementById("alert_no");  
+	
+	alert_msg.visible = false;
+	alert_yes.return = true;
+	alert_no.return = false;
 	
 	// SETTINGS 
 				
@@ -256,11 +282,7 @@ window.onload = function (){
 	
 	var card_img = document.getElementById("card_img");
 	var card_name = document.getElementById("card_name");
-	var card_founder = document.getElementById("card_founder");
-	var founder_name = document.getElementById("founder_name");
-	var card_location = document.getElementById("card_location");
 	var card_description = document.getElementById("card_description");
-	var card_description_db = [];
 	
 	var bt_read_more = document.getElementById("bt_read_more");   
 	
@@ -286,11 +308,11 @@ window.onload = function (){
 	var clicked_zoom = false; // toggle zoom animation ( +/- buttons and dblclick = true )
 	
 	var zoomHandler = d3.behavior.zoom()
-					.scaleExtent(zoom_limits)
-					.scale(cur_scale)
-					.translate([0, 0])
-					.on("zoom", zoom)
-					.on("zoomend", zoom_end); 
+						.scaleExtent(zoom_limits)
+						.scale(cur_scale)
+						.translate([0, 0])
+						.on("zoom", zoom)
+						.on("zoomend", zoom_end); 
 	
 	function zoom_end(){ 
 		clicked_zoom = false;
@@ -335,10 +357,10 @@ window.onload = function (){
 			cur_scale = cur_scale/zoom_factor;
 			zoomHandler.scale(cur_scale).event(radar.transition().duration(dur));
 		}
-	}
-	
+	} 
 	
 	// slider funcs 
+	
 	
 	function calc_slider_scales(){
 		innovation_scale =  ( slider_x - 150 )/26;
@@ -360,16 +382,16 @@ window.onload = function (){
 			calc_slider_scales();  
 		},
 		stop: function( event, ui ) {
-			set_slider(ui.position.left);			
+			set_slider(ui.position.left, true);			
 		}	             
 	});
 	
-	function set_slider(posx){
+	function set_slider(posx, location){
 		
 		slider_x = posx;
 		slider.style.left = posx + 'px';
-		calc_slider_scales();		
 		
+		calc_slider_scales();	 
 		bar_total = innovation_scale + evolution_scale;	
 			
 		if (slider_x > 130 && slider_x < 170){
@@ -379,7 +401,9 @@ window.onload = function (){
 			evolution_scale = 1;
 
 			slider_sep.style.left = "";
-		}
+		} 
+		
+		if(location) set_location();
 
 		// update bars val
 
@@ -460,8 +484,18 @@ window.onload = function (){
 		return evol * evolution_scale / bar_total * bar_max_length;
 	} 
 	
+	// alert funcs 
 		
-	// settings funcss 
+	alert_yes.onclick = function(){
+		toggle_starred();		
+		toggle_alert();		
+	}
+	
+	alert_no.onclick = function(){
+		toggle_alert();		
+	}
+	
+	// settings funcs 
 	
 	bt_settings.onclick = function(){
 		if( !settings.visible ){ 
@@ -724,8 +758,8 @@ window.onload = function (){
 		
 		business.style.zIndex = 6;
 		 
-		for( i in json.filters ){
-			itm = json.filters[i].itm;	
+		for( i in json.industries ){
+			itm = json.industries[i].itm;	
 			itm.style.top = itm.pos - 40 + 'px';
 			$(itm).delay(i*30).animate({opacity:1, top:itm.pos + 'px'}, dur, ease );
 		} 
@@ -744,10 +778,10 @@ window.onload = function (){
 			$(business_icon).show();
 			business_icon.src = "layout/bt_down_g.png";  
 			business_lb.innerHTML = "BUSINESS MODEL : ";
-			model_lb.innerHTML = json.filters[cur_model].name; 
+			model_lb.innerHTML = json.industries[cur_model].name; 
 			
-			for(i in json.filters){
-				itm = json.filters[i].itm;	
+			for(i in json.industries){
+				itm = json.industries[i].itm;	
 				$(itm).animate( { opacity:0 }, dur3, ease );
 			}
 
@@ -762,7 +796,7 @@ window.onload = function (){
 	function set_model( ID, lock_card ){
 		
 		console.log("---------------------------------------------");
-		console.log("MODEL " + ID + " : " + json.filters[ID].name);
+		console.log("MODEL " + ID + " : " + json.industries[ID].name);
 		
 		if( ID == cur_model ){
 			
@@ -788,10 +822,10 @@ window.onload = function (){
 	
 	function set_model_list(){ 
 		business_lb.innerHTML = "BUSINESS MODEL : ";
-		model_lb.innerHTML = json.filters[cur_model].name; 
+		model_lb.innerHTML = json.industries[cur_model].name; 
 		
-		for( i in json.filters ){
-			itm = json.filters[i].itm;
+		for( i in json.industries ){
+			itm = json.industries[i].itm;
 			if( itm.ID == cur_model ){
 				select_bt( itm, true ); 
 			} else { 
@@ -806,7 +840,7 @@ window.onload = function (){
 		if( cur_node ) close_card( true );
 		
 		n_startups = 0;
-		angle_pos = 0;
+		n_techs = 0;
 		
 		// hide all techs
 		json.techs.forEach( function(d,i) { 
@@ -815,7 +849,7 @@ window.onload = function (){
 			d.container
 					.attr('style','display:none'); 
 		});
-		
+		 
 		// set visibility 
 		json.startups.forEach( function(d,i) { 
 			
@@ -827,8 +861,11 @@ window.onload = function (){
 				
 				// add techs to visible list
 				json.techs.forEach( function(t,a) { 
-					if (d.connected.indexOf(t.id) >= 0){
-						t.visible = true; 
+					if (d.connected.indexOf(t.id) >= 0){ 
+						if(!t.visible){
+							n_techs ++;
+							t.visible = true;
+						} 
 					}
 				});
 				
@@ -850,19 +887,19 @@ window.onload = function (){
 		
 		if ( n_startups == 0 ){ 
 			
-			if ( window.confirm( "NO STARRED STARTUPS ARE VISIBLE. SHOW ALL STARTUPS?" ) ) {
-				toggle_starred();
-			}  
+			toggle_alert();			 
 			
 		} else {
-			 
+			
+			angle_pos = 0; 
+			
 			// built startups map  
 			json.startups.forEach( function(d,i) { 
 
 				if( d.visible ){
 
 					startup_angle = angle_pos * 360/n_startups - 90;
-					startup_delay = angle_pos * 10;
+					startup_delay = dur2 * ( angle_pos / n_startups );
 					startup_length = calc_bar_length ( d.val );
 					angle_pos ++; 
 
@@ -912,14 +949,25 @@ window.onload = function (){
 				}
 			}); 
 			
-			// built startups map  
-			json.techs.forEach( function(d,i) { 
+			// built techs map 
 			
+			angle_pos = 0;
+			
+			json.techs.forEach( function(d,i) {   
+				
 				if(d.visible){
+				
+					tech_angle = angle_pos*360/n_techs - 90; 
 					
 					$(d.itm).show();
+					
 					d.container
+						.attr('transform','rotate(' + tech_angle + ')')
 						.attr('style',''); 
+					
+					angle_pos++;
+					
+					d.angle = tech_angle;
 				}
 				
 			});
@@ -1001,9 +1049,20 @@ window.onload = function (){
 		
 		cur_scale = 1;
 		zoomHandler.translate([med_w, med_h]).scale(1).event(radar); 
-		map.attr('transform','translate(' + med_w + ' ' + med_h + ' ) scale(' + cur_scale + ')');
-		
-	}  
+		map.attr('transform','translate(' + med_w + ' ' + med_h + ' ) scale(' + cur_scale + ')'); 
+
+	}
+	
+	function toggle_alert(){ 
+		if(alert_msg.visible){
+			alert_msg.visible = false;
+			$(alert_msg).fadeOut(dur);
+		}else{
+			alert_msg.visible = true;
+			$(alert_msg).fadeIn(dur);		
+		}
+	}
+	
 		 
 	function sort_on(target,attr){
 		target.sort(function (a, b) {
@@ -1102,14 +1161,15 @@ window.onload = function (){
 		var _y = Math.sin(rad)*dist; 
 		return { x:_x , y:_y }; 
 	}
-	 
+	  
 	
-	function set_location( lb, ID ){  
+	function set_location(){  
 		var new_loc;
-		if(!lb)	new_loc = location + "?model=" + cur_model + "&slider=" + slider_x ;
-		else new_loc = location + "?model=" + cur_model + "&" + lb + "=" + ID + "&slider=" + slider_x;
+		if( cur_node == null ) new_loc = location + "?model=" + cur_model + "&slider=" + slider_x ;
+		else new_loc = location + "?model=" + cur_model + "&" + list_lbs[cur_list][1] + "=" + cur_node.id + "&slider=" + slider_x;
 		history.pushState({page: new_loc}, '', new_loc );
 	}
+	
 	
 	function call_card( list_id, ID, push ){ 
 		
@@ -1119,20 +1179,21 @@ window.onload = function (){
 			
 		} else {
 			
-			cur_list = list_id;
+			cur_list = list_id;  
 			
-			if( list_id == 1 ){
-				if( push ) set_location("tech", ID);
+			if( cur_list == 1 ){
 				$(card_ico2).hide();
 				$(card_ico1).show();
 				$(bt_star).hide();
 				card_ico_lb.innerHTML = 'TECHNOLOGY';
+				card_img.className = 'tech_img';
+				
 			}else{ 
-				if( push ) set_location("startup", ID);
 				$(card_ico1).hide(); 
 				$(card_ico2).show();
 				$(bt_star).show();
 				card_ico_lb.innerHTML = 'STARTUP';
+				card_img.className = 'startup_logo';
 			}
 			
 			json_target = json[ list_lbs[list_id][0] ];
@@ -1165,24 +1226,10 @@ window.onload = function (){
 						startup_on(node, white, drk_gray, drk_gray);
 						card_name.className = "card_name_startup";
 					}	  
-
-					var att1 = list_lbs[list_id][1];
-					var att2 = list_lbs[list_id][2]; 
+ 
 					card_img.style.backgroundImage = 'url(' + node.img + ')';
 					card_name.innerHTML = node.name;
-					
-					card_description_db = node.description.split("|");
-					card_description.innerHTML = "";
-					
-					// MULTIPLE DESCRIPTION FEILDS
-					
-					for (i=0; i<card_description_db.length; i++) {
-						
-						if( i%2 == 0 ) card_description.innerHTML += card_description_db[i];
-						else card_description.innerHTML += "<br><br><span class='bold'>" +  card_description_db[i].toUpperCase() + "</span><br>"; 
-						
-					} 
-					
+					  
 					if( list_id == 1 ){  
 						
 						// startup connections  
@@ -1193,14 +1240,9 @@ window.onload = function (){
 							}else{ 	  
 								startup_off(_node); 
 							}
-						} 
+						}  
 						
-						// tech card    
-						$(card_founder).hide();
-						$(card_location).hide();
-
-						founder_name.innerHTML = "";
-						card_location.innerHTML = "";
+						card_description.innerHTML = node.description;
 
 					}else{ 
 						
@@ -1226,7 +1268,7 @@ window.onload = function (){
 									}
 								}								
 							
-							}else{ 
+							}else{
 								
 								tech_off(_node);
 								
@@ -1234,14 +1276,26 @@ window.onload = function (){
 						}
 												
 						// startup card 
-
-						$(card_founder).show();
-						$(card_location).show();
-
-						founder_name.innerHTML = node.founder.toUpperCase();
-						card_location.innerHTML = node.location; 
-
+											
+						card_description.innerHTML = node.description;
+						
+						var card_text = "";
+						
+						for ( a=0; a<startup_card_sub.length; a++ ){
+							if( node[ startup_card_sub[a][1] ] != "" ){
+								
+								card_text += "<br><br><span class='card_title'>" + startup_card_sub[a][0].toUpperCase()+ "</span><br>";
+								
+								if( startup_card_sub[a][1] == 'funding') card_text += dollars(node[startup_card_sub[a][1]]);
+								else card_text += node[startup_card_sub[a][1]];
+							}  
+						}  
+						
+						card_description.innerHTML += card_text;
+						
 					}  
+					
+					card_data.scrollTop = 0;
 
 					//read more
 					bt_read_more.url = node.url; 
@@ -1249,6 +1303,12 @@ window.onload = function (){
 					$(cards).animate( { right: -505 }, dur, ease);  
 				}
 			}
+			
+			// set location
+			
+			if( push ) set_location ();
+			
+			  
 		}
 		
 		draw_connections(0, dur);
@@ -1295,9 +1355,9 @@ window.onload = function (){
 	}
 	
 	function close_card( push ){  
-		if( push ) set_location( false, false );
 		cur_list = null;
 		cur_node = null; 
+		if( push ) set_location();
 		$(cards).animate( { right: -830 }, dur, ease, function(){ 
 			reset_techs(); 
 			reset_startups();			
@@ -1369,6 +1429,27 @@ window.onload = function (){
 		.interpolate("basis");
   
 	
+	function dollars(n) {  
+		
+		n = n.toString();
+		
+		var nr = "";
+		var pos = 1;
+		
+		for(var p = n.length-1; p>=0; p--){
+			nr += n.charAt(p);
+			if(pos==3 && p>0){
+				nr+=",";
+				pos=1;
+			}else{
+				pos++;
+			}
+		}  
+
+		return "$" + nr.split("").reverse().join(""); 
+	}
+
+	
 	function check_get( push ){ 
 		
 		var delay;
@@ -1384,13 +1465,13 @@ window.onload = function (){
 				delay = 0;				
 				business.style.zIndex = "";	
 			} 
-		
-			setTimeout ( function(){
+			
+			setTimeout ( function (){
 				get_tech = $_GET()["tech"];
 				get_startup = $_GET()["startup"]; 
 
 				if( get_tech ) call_card( 1, get_tech, push ); 
-				if( get_startup )call_card( 2, get_startup, push );
+				if( get_startup ) call_card( 2, get_startup, push );
 				if( !get_startup && !get_tech ) close_card( push );
 				
 			}, delay);	
@@ -1402,7 +1483,7 @@ window.onload = function (){
 	// radar scale  
 		
 	function calc_radius(area){
-		return Math.sqrt ( area/Math.PI ) * 2; 
+		return Math.sqrt ( area/Math.PI ) * tech_radius_factor; 
 	} 
 	
 	map_techs.append( 'circle' )
@@ -1430,9 +1511,9 @@ window.onload = function (){
 		
 		// BUSINESS MODEL LIST  
 		
-		filters_h = filter_h * json.filters.length;
+		filters_h = filter_h * json.industries.length;
 		
-		json.filters.forEach(function(d,i) {  
+		json.industries.forEach(function(d,i) {  
 			
 			itm = document.createElement("div");
 			itm.ID = d.id;
@@ -1450,7 +1531,7 @@ window.onload = function (){
 			itm.lb = itm_lb;  
 			
 			filter_bts.appendChild(itm);
-			json.filters[i].itm = itm; 
+			json.industries[i].itm = itm; 
 			
 			itm.pos = i*filter_h;
 			itm.style.top = itm.pos + 'px';
@@ -1471,7 +1552,7 @@ window.onload = function (){
 			$(itm).hide(); 
 
 			itm_img = document.createElement("div");
-			itm_img.className = "itm_img";
+			itm_img.className = "itm_logo"; 
 			itm_img.style.backgroundImage = "url(" + d.img + ")"; 
 			itm.appendChild(itm_img); 
 
@@ -1561,6 +1642,29 @@ window.onload = function (){
 				})
 
 			
+			if( d.connected.length > 0 ){
+				
+				// 0 to 1 innovation = (d.innovation[max:5] + med(techs.innovation) [max:20]) / 25	 
+				var tech_innovation = 0;
+
+				for(a=0; a<d.connected.length; a++){
+					json.techs.forEach(function(t,b) {   
+						if(d.connected[a] == t.id){ 
+							tech_innovation += t.innovation;
+						}
+					});
+				}
+			
+				tech_innovation = tech_innovation / d.connected.length;   
+				d.innovation = (d.innovation + tech_innovation)/25;   
+			
+			} else { 
+			
+				// 0 to 1 innovation = d.innovation[max:5] / 5	 
+				d.innovation = d.innovation / 5;   
+			
+			}
+			
 			// store objects
 			d.container = startup_container;
 			d.startup = startup;
@@ -1637,7 +1741,8 @@ window.onload = function (){
 			tech_container = map_techs.append('g')
 				.attr('id','cont_tech' + d.id)
 				.attr('x', 0)
-				.attr('y', 0)	
+				.attr('y', 0)
+				.attr('style','display:none')
 				.attr('transform','rotate(' + tech_angle + ')') 
 				.on('click', function (){
 						call_card( 1, d.id, true );
@@ -1692,7 +1797,6 @@ window.onload = function (){
 			d.label = tech_label;
 			d.dist = tech_min_dist;
 			d.visible = false;
-			 
  
 		});  
 		
@@ -1701,19 +1805,18 @@ window.onload = function (){
 		sort_on( json.startups, "val" );
 		
 		get_model = $_GET()["model"];
-		if( get_model ){
-			
+		if( get_model ){ 
 			cur_model = get_model; 
 			$(curtain).hide();
 			set_model_list(get_model);
-			startups_map( );
+			startups_map();
 		}	 
 		
 		// permalink check 
 		setTimeout ( function(){
 			get_slider =  $_GET()["slider"];
-			if( get_slider && get_slider != 150 ){ 
-				set_slider(get_slider); 
+			if( get_slider && get_slider != 150 ){				
+				set_slider(get_slider, false); 
 				setTimeout ( function(){
 					check_get(true);
 				}, dur2);
@@ -1721,11 +1824,11 @@ window.onload = function (){
 				check_get(true);
 			}
 			
-		}, dur2); 
+		}, dur2 + dur3); 
 		
 	}); 
 	 
-	/////////////////////// initial layout /////////////////////// 
+	/////////////////////// initial layout  
 	
 	resize();  
 	map.attr("transform", "translate(" + med_w + "," + med_h + ") scale(" + cur_scale + ")"); 
@@ -1755,14 +1858,17 @@ window.onload = function (){
 	
 	logo_client.src = "layout/logo_" + clients[client_id][0] + ".png";
 	
+	$(alert_msg).fadeOut(0);
+	
 	// user data visibility
 	
 	if(client_id == 1){
 		$(user).hide();
 		$(settings_guest).hide();
 		$(settings_guest_title).hide();
-		settings.style.height = '210px';
+		settings.style.height = '180px';
 	}
+	
 	
 	
 }

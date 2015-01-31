@@ -265,7 +265,7 @@ body , html{
 
 #settings{
 	width: 500px;
-	height: 390px;
+	height: 360px;
 	margin: auto;
 	position: fixed;
 	top: 0;
@@ -284,6 +284,8 @@ body , html{
 	margin: 26px 0 36px 0;
 	display: table;
 	font-weight: 600;
+	position: relative;
+	top: -30px
 } 
 
 .settings_title span { width: 20%; float: left; text-align: center} 
@@ -296,6 +298,7 @@ body , html{
 	height: 36px;
 	font-weight: 100;
 	position: relative;
+	top: -30px
 }
 
 .setting_bt{
@@ -313,8 +316,7 @@ body , html{
 	font-weight: 700;
 	font-size: 14px;
 	color: #333;
-} 
-
+}  
  
 #user{
 	position: absolute;
@@ -376,6 +378,48 @@ input{
 	top: -6px;
 }
 
+/* ALERT */
+
+#alert_msg{ 
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 20;
+	background: rgba(255,255,255,.9);
+}
+
+#alert_box{
+	position: absolute;
+	width: 500px;
+	height: 200px;
+	margin:  auto;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 6;
+	font-size: 18px;
+	text-align: center;
+	color: #333;
+	padding: 50px 20px;
+	line-height: 24px;
+}
+
+.alert_bt{
+	width: 115px;
+	border-radius: 15px;
+	overflow: hidden;
+	padding: 2px 0;
+	text-align: center;
+	cursor: pointer;
+	font-size: 14px;
+	background: #333;
+	color: #fff;
+	display: inline-block;
+	margin: 30px 10px;
+}  
 
 /* SEARCH */ 
 
@@ -528,6 +572,15 @@ input{
 	background-size:cover;
 }
 
+.itm_logo{
+	width:60px;
+	height:60px;
+	background-size:contain; 
+	background-repeat: no-repeat;
+	background-position: center;
+	border: 10px #fff solid;
+}
+
 .itm_mask{
 	position: absolute;
 	width:60px;
@@ -539,9 +592,9 @@ input{
 
 .itm_lb{
 	position:absolute;
-	left:90px;
+	left:80px;
 	top:22px;
-	width:250px;
+	width:260px;
 	height:30px;
 	overflow:hidden;
 	text-overflow:ellipsis;
@@ -644,12 +697,23 @@ input{
 }
 
 #card_img{
-	width:250px;
-	height:140px;
-	background-size:cover;
+	height:140px; 
+	background-repeat: no-repeat;
+	background-position: center;
 	border:#fff 1px solid; 
 	overflow: hidden;
 	border-radius: 3px;
+}
+
+.tech_img{ 
+	width:250px;
+	background-size: cover;
+}
+
+.startup_logo{
+	width:200px;
+	background-size: contain;
+	margin: auto;
 }
 
 #card_data{
@@ -679,30 +743,14 @@ input{
 #card_description{
 	line-height:16px;
 	margin-bottom:10px;
+	font-size: 12px;
+	padding-bottom: 20px;
 }
 
-#card_bars{
-	width:210px;
-	height:65px;
-	position:absolute;
-	left:20px;
-	bottom:36px;
-	font-weight:300;
-	display: none;
+.card_title{
+	font-weight: 700;
+	font-size: 10px;
 }
-
-.card_bar{
-	width:100%;
-	height:2px;
-	margin-bottom:5px
-}
-
-.bar_lb{
-	width:100%;
-	height:18px;
-	position: relative;
-}
-  
 
 /* READ MORE */
 
