@@ -967,20 +967,28 @@ window.onload = function (){
 					$(d.itm).show();
 					
 					d.container
+						.transition().duration(dur2)
 						.attr('transform','rotate(' + tech_angle + ')') 
 						.attr('style',''); 
 					
 					d.circle
+						.transition().duration(dur2)
 						.attr('r',tech_radius ); 
 					
 					if( tech_angle <= 90 ){  
 						d.label 
+							.attr('text-anchor','start')
+							.attr('style','text-align:left')	
+							.transition().duration(dur2)
 							.attr('transform','translate(' + tech_radius * 1.5 + ' 0 )') 
 
 					}else{ 
 						d.label 
+							.attr('text-anchor','end')
+							.attr('style','text-align:right')	
+							.transition().duration(dur2)
 							.attr('transform','translate(' + tech_radius * 1.5 + ' 0 ) rotate(180)')  
-					}   
+					}    
 					
 					angle_pos++;
 					
