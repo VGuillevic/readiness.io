@@ -1,8 +1,8 @@
 <?php
 
 
-$login = "proximus"; $password = "proximus123"; 
-//$login = "kbc"; $password = "kbc123";  
+//$login = "proximus"; $password = "proximus123"; 
+$login = "kbc"; $password = "kbc123";  
 
 //if(1<2){
 if(	isset($_POST["login"]) && $_POST["login"] == $login && isset($_POST["password"]) && $_POST["password"] == $password ){
