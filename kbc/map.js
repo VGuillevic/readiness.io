@@ -97,7 +97,7 @@ window.onload = function (){
 							["country","country"],
 							["state","state"],
 							["city","city"],
-							["company type","type"],
+							["API","type"],
 							["business model","model"],
 							["partnerships","partnerships"],
 							["investors","investors"],
