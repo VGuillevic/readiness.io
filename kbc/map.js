@@ -15,7 +15,7 @@
 	//login
 
 	var client_id = 0;
-	var clients = [	["kbc","https://www.kbc.com","kbc123"],
+	var clients = [	["kbc","https://www.kbc.com","dvRsyxemq27gLy"],
 					["proximus","http://www.proximus.be/","proximus123"]];   
 
 	if (window.sessionStorage.getItem('login') != clients[client_id][0] || window.sessionStorage.getItem('password') != clients[client_id][2] ){ 
