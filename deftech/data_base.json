@@ -1,0 +1,45 @@
+{ 
+"techs": [
+	{	"id":0, 
+		"name":"tech name", 
+		"description":"short description", 
+		"text":"long explanation - html formatted text",
+		"img":"http://url",
+		"url":"http://url", // read more
+		"category":2, // categ id
+		"readiness":{
+			"demonstration":5,
+			"breakthrough":4,
+			"investment":2,
+			"cost":4,
+			"explainability":4,
+			"usefulness":2,
+			"necessity":3,
+			"competition":3,
+			"relevance":4},
+		"industries":[1,2,4,7],	// impacted industries (id)
+		"impacts":[20,30,50,10], // impact in each industry
+	 	"related":[1,2,3] // related techs (id)
+	},
+],
+	
+"categories": [
+	{	"id":0,
+	 	"name":"categ name",
+	 	"description":"short description",
+	 	"color":"#hex",
+	 	"icon":"<path>svg code</path>"
+	}
+	
+],	
+	
+"industries": [
+	{ "id":0, "name":"HOME"},
+	{ "id":1, "name":"ENTERPRISE"},
+	{ "id":2, "name":"CLOUD"},
+	{ "id":3, "name":"VIDEO"},
+	{ "id":4, "name":"GAMING"},
+	{ "id":5, "name":"MOBILE"},
+	{ "id":6, "name":"HEALTH"},
+	{ "id":7, "name":"DATA"}
+]}
