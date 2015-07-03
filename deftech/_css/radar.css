@@ -8,7 +8,7 @@ a:hover{ color: #fff; text-decoration: none; opacity: 1 }
 a:active{ color: #fff; text-decoration: none; opacity: 1 }
 a:visited{ color: #fff; text-decoration: none; opacity: .5 }
 
-body , html{
+body, html{
 	color:#333;
 	font-size:11px;
 	font-weight:400;
@@ -70,13 +70,11 @@ body , html{
 	top:-12px;
 	right:0;
 }
-  
 
 #categ_lb{ font-weight:300; text-transform: uppercase}  
 
-#filter_bts{ 
+#filter_bts{
 	position: fixed; 
-	height: 280px;
 	width: 400px;
 	top: 0;
 	bottom: 0;

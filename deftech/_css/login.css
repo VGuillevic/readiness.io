@@ -1,0 +1,61 @@
+
+@import url(http://fonts.googleapis.com/css?family=Exo+2:100,200,300,400,600,700);  
+
+#logo { 
+	position: absolute;
+	top: 10%;
+	width: 100%;
+	height: 70px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+#form {
+	width: 300px;
+	height: 120px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+	color: #fff;
+	text-align: center;
+	font-size: 12px;
+}
+
+.mt20{margin-top: 20px}
+
+input{
+	border:none;
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 10px 0;
+	text-align: center;
+	outline: 0;
+}
+
+input:focus::-webkit-input-placeholder { color: #fff; } 
+input:focus:-moz-placeholder { color: #fff; } 
+input:focus::-moz-placeholder { color: #fff; }  
+input:focus:-ms-input-placeholder { color: #fff; }
+
+#submit{
+	border: none;
+	border-radius: 3px;
+	color: #fff;
+	padding: 5px 0;
+	cursor: pointer;
+	width: 100%; 
+}
+
+#msg{
+	position: absolute;
+	bottom: -40px;
+	width:300px;
+	text-align:center;
+} 
+
+
+
