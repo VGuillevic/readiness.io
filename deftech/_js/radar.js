@@ -85,8 +85,7 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 			var _node;
 			var __node;
 			var list;
-
-			var cur_list = null; 
+ 
 			var cur_node = null;  
 
 			// map vars 
@@ -118,8 +117,7 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 			var list_w = 370;
 			var list_h;
 			var list_hc;
-			var list_div_h = 36;
-			var list_div_n = 3;
+			var list_div_h = 42;
 
 			var filter_h = 36;
 			var filters_h;
@@ -201,13 +199,13 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 			var list_container = document.getElementById("list_container");	
 			list_container.visible = false;
 
-			var list = document.getElementById("list");
 			var bt_search = document.getElementById("bt_search");
+			var ico_search = document.getElementById("ico_search");
+			var ico_search_back = document.getElementById("ico_search_back");  
+			var search = document.getElementById("search");   
 
-			var search = document.getElementById("search");
-			var search_ico = document.getElementById("search_ico");
-			var bt_search_img = document.getElementById("bt_search_img");    
-
+			var list = document.getElementById("list");
+			
 			// card
 
 			var cards = document.getElementById("cards");
@@ -422,14 +420,14 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 
 				if(this.on){
 					this.on = false;
-					this.style.color = theme.med;
-					this.style.background = theme.drk;
+					this.style.color = theme.bt_label_off;
+					this.style.background = theme.bt_bg_off;
 					this.innerHTML = "OFF";
 					this.map.setAttribute('class', 'lb_off');
 				}else{
 					this.on = true;
-					this.style.color = "";
-					this.style.background = "";
+					this.style.color = theme.bt_label_on;
+					this.style.background = theme.bt_label_on;
 					this.innerHTML = "ON";
 					this.map.setAttribute('class', '');
 				}
@@ -441,8 +439,8 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 
 				if(settings_bt3.on){
 					settings_bt3.on = false;
-					settings_bt3.style.color = theme.med;
-					settings_bt3.style.background = theme.drk;
+					settings_bt3.style.color = theme.bt_label_off;
+					settings_bt3.style.background = theme.bt_bg_off;
 					settings_bt3.innerHTML = "OFF";
 
 					only_starred = false;			
@@ -450,8 +448,8 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 
 				}else{
 					settings_bt3.on = true;
-					settings_bt3.style.color = "";
-					settings_bt3.style.background = "";
+					settings_bt3.style.color = theme.bt_label_on;
+					settings_bt3.style.background = theme.bt_bg_on;
 					settings_bt3.innerHTML = "ON";
 
 					only_starred = true;			
@@ -486,13 +484,15 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 			bt_search.onclick = function(){ 
 				if(list_container.visible){
 					list_container.visible = false;
-					$(list_container).animate( {left:( -list_w - 15 )}, dur, ease);
-					bt_search_img.src = "layout/bt_search.png";
+					$(list_container).animate( {left:( -list_w - 20 )}, dur, ease);
+					$(ico_search).show();
+					$(ico_search_back).hide();
 					list_container.style.zIndex = "";
 				}else{ 
 					list_container.visible = true;
 					$(list_container).animate( {left:0}, dur, ease);
-					bt_search_img.src = "layout/bt_close1.png";
+					$(ico_search).hide();
+					$(ico_search_back).show();
 					list_container.style.zIndex = 3;
 				}
 			}
@@ -513,46 +513,24 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 				trg.lb.style.opacity = 1;
 				if(trg.svg) trg.svg.style.opacity = 1;
 				if(trg.close) $(itm.close).hide();
-			}
-
-			search.onfocus = function(){
-				if(this.value == "SEARCH"){
-					this.value = "";
-				}
-				this.style.opacity = 1;
-				search_ico.style.opacity = 1;
-			}
-
-			search.onblur = function(){ 
-				if( this.value == "SEARCH" || this.value == "" ){ 
-					reset_search();
-				} 
-			}
+			}  
 
 			function reset_search(){
 				search.value = "";
 				search_for("");
 				search.input = false;
 
-				search.style.opacity = op_down; 
-				search_ico.style.opacity = op_down;
-				search_ico.src = "layout/bt_search.png";
-
-				search.value = "SEARCH";
+				search.value = "SEARCH TECHNOLOGIES";
 			}
 
 			search.oninput = function(){
 				if( this.value != "" ) {
-					search.input = true;
-					search_ico.src = "layout/bt_close1.png";
+					search.input = true; 
 				}else{
-					search.input = false;
-					search_ico.src = "layout/bt_search.png"; 
+					search.input = false; 
 				}
 
-				if( list_visible == 1 ) json_target = json.techs;
-				else json_target = json.startups;	
-
+				json_target = json.techs; 
 				search_for(this.value); 
 			}
 
@@ -567,7 +545,11 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 					}
 				}
 			}
-
+			
+			/*
+			
+			!!!!! criar icone X no search !!!!!
+			
 			search_ico.onclick = function(){
 				if(search.input){
 					reset_search();	
@@ -575,6 +557,9 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 					search.focus();	
 				} 
 			}
+			
+			*/
+			
 
 			bt_read_more.onclick = function(){
 				window.open(this.url);
@@ -919,7 +904,7 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 				med_w = win_w/2;
 				med_h = win_h/2;
 
-				list_h = win_h - list_div_h*list_div_n + 5; 
+				list_h = win_h - list_div_h - 20; 
 
 				list.style.height = list_h + 'px';
 
@@ -971,7 +956,7 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 
 
 			function draw_connections( delay, fade ){ 
-
+				/*
 				if( cur_node && cur_node.visible ){
 
 					clear_connections();
@@ -1015,6 +1000,7 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 
 					}, delay);
 				}
+				*/
 			}
 
 			function connect( node1, node2, wdt, color ){ 
@@ -1037,42 +1023,25 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 				var _y = Math.sin(rad)*dist; 
 				return { x:_x , y:_y }; 
 			}
-
-
+ 
 			function set_location(){  
 				var new_loc;
 				if( cur_node == null ) new_loc = location + "?categ=" + cur_categ + "&slider=" + slider_x ;
-				else new_loc = location + "?categ=" + cur_categ + "&" + list_lbs[cur_list][1] + "=" + cur_node.id + "&slider=" + slider_x;
+				else new_loc = location + "?categ=" + cur_categ + "&tech=" + cur_node.id + "&slider=" + slider_x;
 				history.pushState({page: new_loc}, '', new_loc );
 			}
+ 
+			function call_card( ID, push ){ 
 
-
-			function call_card( list_id, ID, push ){ 
-
-				if ( cur_list == list_id && cur_node.id == ID ) {
+				if ( cur_node.id == ID ) {
 
 					close_card( push );
 
-				} else {
+				} else { 
 
-					cur_list = list_id;  
+					card_img.className = 'tech_img';  
 
-					if( cur_list == 1 ){
-						$(card_ico2).hide();
-						$(card_ico1).show();
-						$(bt_star).hide();
-						card_ico_lb.innerHTML = 'TECHNOLOGY';
-						card_img.className = 'tech_img';
-
-					}else{ 
-						$(card_ico1).hide(); 
-						$(card_ico2).show();
-						$(bt_star).show();
-						card_ico_lb.innerHTML = 'STARTUP';
-						card_img.className = 'startup_logo';
-					}
-
-					json_target = json[ list_lbs[list_id][0] ];
+					json_target = json.techs;
 
 					for( i in json_target ){
 
@@ -1083,7 +1052,7 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 							if( list_id == 1 ) tech_off(node);
 							if( list_id == 2 ) startup_off(node);  
 
-						}else{  
+						}else{
 
 							cur_node = node; 
 
@@ -1131,8 +1100,7 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 
 									if( node.connected.indexOf( _node.id ) >= 0 ) {	 
 
-										tech_on(_node, theme.med, theme.med, 1 ); 
-
+										tech_on(_node, theme.med, theme.med, 1 );  
 										//subconnections
 
 										for( b in json.startups ){  
@@ -1149,26 +1117,7 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 										tech_off(_node);
 
 									}
-								}
-
-								// startup card 
-
-								card_description.innerHTML = node.description;
-
-								var card_text = "";
-
-								for ( a=0; a<startup_card_sub.length; a++ ){
-									if( node[ startup_card_sub[a][1] ] != "" ){
-
-										card_text += "<br><br><span class='card_title'>" + startup_card_sub[a][0].toUpperCase()+ "</span><br>";
-
-										if( startup_card_sub[a][1] == 'funding') card_text += dollars(node[startup_card_sub[a][1]]);
-										else card_text += node[startup_card_sub[a][1]];
-									}  
-								}  
-
-								card_description.innerHTML += card_text;
-
+								} 
 							}  
 
 							card_data.scrollTop = 0;
@@ -1213,7 +1162,6 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 
 
 			function close_card( push ){  
-				cur_list = null;
 				cur_node = null; 
 				if( push ) set_location();
 				$(cards).animate( { right: -830 }, dur, ease, function(){ 
@@ -1285,27 +1233,12 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 				return "$" + nr.split("").reverse().join(""); 
 			} 
 
-			function check_get( push ){ 
+			function check_get( push ){  
+				
+				get_tech = $_GET()["tech"]; 
 
-				var delay;
-
-				get_categ = $_GET()["categ"];
-
-				if ( get_categ != cur_categ ){
-					set_categ( get_categ, true );	
-					delay = dur2;
-				}else{
-					delay = 0;				
-					categ.style.zIndex = "";	
-				} 
-
-				setTimeout ( function (){
-					get_tech = $_GET()["tech"]; 
-
-					if( get_tech ) call_card( 1, get_tech, push );  
-					if( !get_tech ) close_card( push );
-
-				}, delay);	
+				if( get_tech ) call_card( get_tech, push );  
+				if( !get_tech ) close_card( push ); 
 
 			}
 
@@ -1369,25 +1302,17 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 				// TECHNOLOGIES LIST 
 				n_techs = json.techs.length;
 
-				var itm_mask;
-
 				json.techs.forEach(function(d,i) { 
 
 					itm = document.createElement("div");
 					itm.id = "tech" + d.id;
 					itm.ID = d.id;
 					itm.className = "itm";
-					itm.url = d.url;
-					$(itm).hide(); 
-
-					itm_mask = new Image();
-					itm_mask.className = "itm_mask";
-					itm_mask.src = "_layout/mask_techs.png"; 
-					itm.appendChild(itm_mask);
+					itm.url = d.url; 
 
 					itm_img = document.createElement("div");
 					itm_img.className = "itm_img";
-					itm_img.style.backgroundImage = "url(" + d.img + ")"; 
+					itm_img.style.backgroundImage = "url(" + d.photo + ")"; 
 					itm.appendChild(itm_img);
 
 					itm_lb = document.createElement("div");
@@ -1396,7 +1321,7 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 					itm.appendChild(itm_lb); 
 
 					itm.onclick = function(){ 
-						call_card(1,this.ID, true); 
+						call_card( this.ID, true); 
 					}
 
 					d.itm = itm; 
@@ -1426,7 +1351,7 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 						//.attr('style','display:none')
 						.attr('transform','rotate(' + tech_angle + ')') 
 						.on('click', function (){
-								call_card( 1, d.id, true );
+								call_card( d.id, true );
 							})  
 
 					tech = tech_container.append('g')
@@ -1438,7 +1363,8 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 						.attr('id','tech_circle' + d.id)
 						.attr('cx', 0)
 						.attr('cy', 0)	
-						.attr('fill', theme.med ) 
+						//.attr('fill', theme.tech_bg ) 
+						.attr('fill', '#f00' ) // category 
 						.attr('fill-opacity', op_up ) 
 						.attr('stroke','none')
 						.attr('r', tech_radius)  
@@ -1448,7 +1374,7 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 						tech_label = tech.append('text')
 							.text(d.name)
 							.attr('id','tech_lb'+ d.id)			
-							.attr('fill', theme.med ) 
+							.attr('fill', theme.tech_label ) 
 							.attr('class','tech_lb')	
 							.attr("dominant-baseline", "central")
 							.attr('stroke-width', 0)
@@ -1459,7 +1385,7 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 						tech_label = tech.append('text')
 							.text(d.name)
 							.attr('id','tech_lb'+ d.id)	
-							.attr('fill', theme.med) 
+							.attr('fill', theme.tech_label ) 
 							.attr('class','tech_lb')	
 							.attr('style','text-align:right')		
 							.attr('text-anchor','end')
@@ -1477,7 +1403,7 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 					d.angle = tech_angle;
 					d.label = tech_label;
 					d.dist = tech_min_dist;
-					d.visible = false;
+					d.visible = true;
 
 				});   
 
@@ -1511,16 +1437,19 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 			map.attr("transform", "translate(" + med_w + "," + med_h + ") scale(" + cur_scale + ")"); 
 
 			document.body.style.background = theme.bg; 
-			curtain.style.background = theme.drk;  
+			curtain.style.background = theme.curtain;  
 
 			$(filter_bts).hide(); 
 
 			bt_search.style.left = (list_w + 30) + "px";
+			$(search).css({color:theme.bt_label_on});
 
-			slider_circle.style.background = theme.brg; 
+			slider_circle.style.background = theme.slider;
+			
+			title
 
-			settings_bt2.style.color = theme.med;
-			settings_bt2.style.background = theme.drk;
+			settings_bt2.style.color = theme.bt_label_off;
+			settings_bt2.style.background = theme.bt_bg_off;
 
 			$(settings_user).hide();
 

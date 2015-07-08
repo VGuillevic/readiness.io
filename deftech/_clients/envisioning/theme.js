@@ -1,29 +1,25 @@
 /* ENVISIONING THEME - DEFAULT */ 
-
+ 
 var theme = { 
+	
 	url:'http://www.envisioning.io',
 	users:['env1','env2'],
 	user_pw:['env1','env2'],
-	bg:'#e6eaef',
-	brg:'ff0',
-	med:'#f00',
-	alert:'#f00',
-	drk:'#676e78' 
+	bg:'#dce0e5',
+	bg_radar:'#676e78',
+	label_radar:'#fff',
+	curtain:'#676e78',
+	alert:'#f00', 
+	
+	bt_bg_on:'fff',
+	bt_label_on:'#333',	
+	bt_bg_off:'333',
+	bt_label_off:'#666', 
+	
+	tech_label:'#333',
+	tech_off:'#333',
+	tech_off_label:'#666',
+	slider:'#333' 
+	
 };
-
-
-
-/*
-
-bg
-bg_bts
-ico_bts
-filter_lb (ALL INDUSTRIES)
-filter seta
-circles/radar
-tech_labels
-curtain
-filter_bts
-
-
-*/
+ 

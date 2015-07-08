@@ -18,16 +18,16 @@ window.onload = function(){
 	var client = ( $_GET()["client"] || 'envisioning' );
 	var get_msg = $_GET()["msg"];
 	var get_tech = $_GET()["tech"]; 
-	var get_categ = $_GET()["categ"]; 
-	var get_slider = $_GET()["slider"];   
+	var get_categ = ($_GET()["categ"] || -1 ); 
+	var get_slider = ($_GET()["slider"] || 150 ); 
 	
-	$.getScript("_clients/" + client + "/theme.js", function(){ 
+	$.getScript("_clients/" + client + "/theme.js", function(){  
 		$(document.body).css({background:theme.bg});
-		$(submit).css({background:theme.drk});
+		$(submit).css({background:theme.bg_radar});
 		$(msg).css({color:theme.alert});
 		$(logo).css({backgroundImage:"url(_clients/" + client + "/logo.png)" });
 		$(document.body).fadeIn(250); 
-	}); 
+	});
 	
 	var destination; 
 	
