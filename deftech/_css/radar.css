@@ -175,8 +175,8 @@ body, html{
 }
 
 .bt svg{
-	width: 100%;
-	height: 100%;
+	width: 36px;
+	height: 36px;
 	position: absolute;
 	top: 3px;
 	left: 3px;
@@ -275,8 +275,8 @@ body, html{
 }
 
 #settings{
-	width: 500px;
-	height: 360px;
+	width: 600px;
+	height: 180px;
 	margin: auto;
 	position: fixed;
 	top: 0;
@@ -285,8 +285,7 @@ body, html{
 	right: 0;
 	z-index: 6;
 	font-size: 18px;
-	color: #fff;
-	border-bottom: #fff 1px solid;
+	color: #fff; 
 } 
 
 .settings_title{
@@ -294,7 +293,7 @@ body, html{
 	text-align: center;
 	margin: 26px 0 36px 0;
 	display: table;
-	font-weight: 600;
+	font-weight: 400;
 	position: relative;
 	top: -30px
 } 
@@ -309,14 +308,13 @@ body, html{
 	height: 36px;
 	font-weight: 100;
 	position: relative;
-	top: -30px
 }
 
-.setting_bt{
+.setting_bt, .setting_sel{
 	position: absolute;
 	right: 0;
 	top: -6px;
-	width: 115px;
+	width: 230px;
 	height: 26px;
 	background: #fff;
 	border-radius: 15px;
@@ -328,6 +326,10 @@ body, html{
 	font-size: 14px;
 	color: #333;
 }  
+
+.setting_sel{
+	
+}
  
 #user{
 	position: absolute;
@@ -444,6 +446,12 @@ input{
 	top:10px;
 }
 
+#bt_search_cancel{
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
 #list_container{
 	position:fixed;
 	top:0;
@@ -490,14 +498,6 @@ input{
 	vertical-align:middle;
 } 
 
-
-#list_type{
-	top:15px;
-	border-radius:2px;
-	font-weight: 600;
-}
-
-#list_type svg{ position: relative; top: 3px; right: 3px;}
 
 #search_container {
 	top: 10px;
@@ -668,13 +668,7 @@ input{
 	position:absolute;
 	left:-51px;
 	top:0;
-}
-
-#bt_card_settings{ 
-	position:absolute;
-	left:-51px;
-	top:38px;
-}
+} 
 
 #bt_star{
 	position:absolute;

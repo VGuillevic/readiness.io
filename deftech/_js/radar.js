@@ -174,6 +174,9 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 			var curtain = document.getElementById("curtain");
 			var settings = document.getElementById("settings");
 			var bt_settings_img = document.getElementById("bt_settings_img"); 
+			
+			var ico_close_settings = document.getElementById("ico_close_settings"); 
+			var ico_settings = document.getElementById("ico_settings"); 
 
 			settings.visible = false;
 			$(settings).hide();
@@ -185,14 +188,7 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 			settings_bt2.map = document.getElementById("techs") 
 
 			settings_bt1.on = true;
-			settings_bt2.on = false;
-
-			var settings_guest = document.getElementById("settings_guest");
-			var settings_guest_title = document.getElementById("settings_guest_title");
-			var settings_user = document.getElementById("settings_user"); 
-
-			var login_user = document.getElementById('login_user')
-			var logout_user = document.getElementById('logout_user')  
+			settings_bt2.on = false; 
 
 			// SEARCH
 
@@ -203,7 +199,9 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 			var ico_search = document.getElementById("ico_search");
 			var ico_search_back = document.getElementById("ico_search_back");  
 			var search = document.getElementById("search");   
-
+			
+			var bt_search_cancel = document.getElementById("bt_search_cancel");
+			
 			var list = document.getElementById("list");
 			
 			// card
@@ -396,23 +394,21 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 			function open_settings(){
 				settings.visible = true;
 				$(settings).stop(true).fadeIn(dur);
+				$(ico_settings).hide();
+				$(ico_close_settings).show();
 				change_curtain(op_up);
-				bt_settings_img.src = "layout/bt_close1.png";
-				bt_settings.style.zIndex = 6;
-				user.style.zIndex = 6;
-
+				bt_settings.style.zIndex = 6; 
 				clearTimeout( bt_settings_timeout );
 			}
 
 			function close_settings(){
 				settings.visible = false;
 				$(settings).stop(true).fadeOut(dur);
-				change_curtain(0);
-				bt_settings_img.src = "layout/bt_settings.png";		
-
+				change_curtain(0); 
+				$(ico_settings).show();
+				$(ico_close_settings).hide();
 				bt_settings_timeout = setTimeout( function(){ 
-					bt_settings.style.zIndex = ""; 
-					user.style.zIndex = ""; 
+					bt_settings.style.zIndex = "";  
 				}, dur);
 			} 
 
@@ -457,26 +453,7 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 				} 
 			}  
 
-			settings_bt2.onclick = toggle_starred;  
-
-			login_user.onclick = login;
-			logout_user.onclick = logout;
-
-			function login(){ 
-				settings.style.height = "330px";
-				$(settings_user).show();
-				$(settings_guest).hide();
-				user_lb.innerHTML = "thomaz.rezende@gmail.com ";
-				$(bt_card_settings).show();
-			}
-
-			function logout(){ 
-				settings.style.height = "";
-				$(settings_user).hide();
-				$(settings_guest).show(); 
-				user_lb.innerHTML = "GUEST";
-				$(bt_card_settings).hide();
-			}
+			settings_bt2.onclick = toggle_starred;   
 
 
 			// search funcs  
@@ -518,18 +495,22 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 			function reset_search(){
 				search.value = "";
 				search_for("");
-				search.input = false;
-
-				search.value = "SEARCH TECHNOLOGIES";
+				search.input = false; 
+				search.value = "";
+				$(bt_search_cancel).hide();
 			}
+			
+			bt_search_cancel.onclick = reset_search;
 
 			search.oninput = function(){
 				if( this.value != "" ) {
 					search.input = true; 
+					$(bt_search_cancel).show();
 				}else{
 					search.input = false; 
+					$(bt_search_cancel).hide();
 				}
-
+				
 				json_target = json.techs; 
 				search_for(this.value); 
 			}

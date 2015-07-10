@@ -13,7 +13,7 @@ var theme = {
 	
 	bt_bg_on:'fff',
 	bt_label_on:'#333',	
-	bt_bg_off:'333',
+	bt_bg_off:'#333',
 	bt_label_off:'#666', 
 	
 	tech_label:'#333',
