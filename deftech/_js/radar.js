@@ -201,6 +201,7 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 			var search = document.getElementById("search");   
 			
 			var bt_search_cancel = document.getElementById("bt_search_cancel");
+			var ico_search_cancel = document.getElementById("ico_search_cancel");
 			
 			var list = document.getElementById("list");
 			
