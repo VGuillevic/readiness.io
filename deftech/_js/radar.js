@@ -113,7 +113,7 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 
 			var search_tx;
 
-			var search_list_h; 
+			var list_h; 
 			var list_div_h = 42;
 
 			var filter_h = 36;
@@ -865,9 +865,9 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 				med_w = win_w/2;
 				med_h = win_h/2;
 
-				search_list_h = win_h - list_div_h - 20;  
-				search_list.style.height = search_list_h + 'px';
-				settings_list.style.height = win_h - 20 + 'px';
+				list_h = win_h - list_div_h - 20;  
+				search_list.style.height = list_h + 'px';
+				settings_list.style.height =  list_h + 'px';
 
 				cur_scale = 1;
 				zoomHandler.translate([med_w, med_h]).scale(1).event(radar); 

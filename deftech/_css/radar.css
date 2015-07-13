@@ -285,66 +285,68 @@ body, html{
 #bt_settings{
 	top:10px;
 	right: 400px;
-}
-
-#settings{
-	width: 600px;
-	height: 130px;
-	margin: auto;
-	position: fixed;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	z-index: 6;
-	font-size: 18px;
-	color: #fff; 
 } 
-
-.settings_title{
-	width: 100%;
-	text-align: center;
-	margin: 26px 0 36px 0;
-	display: table;
-	font-weight: 400;
-	position: relative;
-	top: -30px
-} 
-
-.settings_title span { width: 20%; float: left; text-align: center} 
-.hr_l { width: 40%; float: left; margin-top: 6px  } 
-.hr_r { width: 40%; float: right; margin-top: 6px  } 
-
+ 
  
 .setting{
 	width: 100%;
-	height: 36px;
-	font-weight: 100;
+	height: 42px;
 	position: relative;
 }
 
-.setting_bt, .setting_sel{
+.setting_lb{
+	font-size: 13px;
+	font-weight: 400;
+	padding: 24px;
+}
+
+.setting_bt{
 	position: absolute;
-	right: 0;
-	top: -6px;
-	width: 230px;
-	height: 26px;
+	right: 20px;
+	top: 18px;
+	width: 60px;
+	height: 24px;
 	background: #fff;
+	color: #333;
 	border-radius: 15px;
 	overflow: hidden;
-	padding: 6px 0;
+	padding: 2px 0;
 	text-align: center;
 	cursor: pointer;
-	font-weight: 700;
-	font-size: 14px;
-	color: #333;
+	font-weight: 300;
+	font-size: 12px;
+	text-overflow: clip;
+	white-space: nowrap;
+	border: #ccc 1px solid;
 }  
 
-.setting_sel{
-	
+.settings_bt_lb {
+	position: absolute;
+	bottom: 4px;
+	left: 4px;
+	width: 14px;
+	height: 14px;
 }
+
+.settings_bt_lb .circle {
+	width: 14px;
+	height: 14px;
+	border-radius: 14px;
+	background: #333;
+}
+
+.settings_bt_lb span {
+	position: absolute;
+	top: 0;
+	width: 40px;
+	text-align: center;
+	display: block;
+}
+
+.settings_bt_lb .lb_off { right: -40px; }
+.settings_bt_lb .lb_on { left: -40px; }
  
-#user{
+#user {
 	position: absolute;
 	top: 15px;
 	right: 60px;
@@ -368,7 +370,6 @@ body, html{
 
 input{
 	width: 250px;
-	padding: 6px 12px;
 	background: #fff;
 	border-radius: 3px;
 	float: right;
@@ -453,6 +454,38 @@ input{
 	margin: 30px 10px;
 }  
 
+
+/* DISPLAY */ 
+
+.display{
+	position:fixed;
+	top:0;
+	width:390px;
+	height:100%;
+	z-index:3;
+}
+
+.display_left{ left:-390px; }
+.display_right{ right:-390px; }
+
+.display_header {
+	position:absolute; 
+	height: 42px;
+	width:380px;
+	top: 10px;
+	background: #fff;
+	border-top-left-radius:1px;
+	border-top-right-radius:1px;
+	border-bottom:#eee 1px solid;
+	background:#fff;
+	overflow:hidden; 
+	padding: 14px 25px;
+	font-size: 14px;
+} 
+
+.display_right .display_header{left:0;}
+.display_left .display_header{right:0;}
+
 /* SEARCH */ 
 
 #bt_search{
@@ -469,18 +502,8 @@ input{
 	position:absolute;
 	cursor:pointer;
 	z-index: 1;
-}
+} 
 
-.display{
-	position:fixed;
-	top:0;
-	width:390px;
-	height:100%;
-	z-index:3;
-}
-
-.display_left{ left:-390px; }
-.display_right{ right:-390px; }
 
 #search_list{
 	width:380px;
@@ -509,25 +532,11 @@ input{
 	vertical-align:middle;
 } 
  
-#search_container {
-	position:absolute; 
-	height: 42px;
-	width:380px;
-	top: 10px;
-	left:10px;
-	background: #fff;
-	border-top-left-radius:1px;
-	border-top-right-radius:1px;
-	border-bottom:#eee 1px solid;
-	background:#fff;
-	overflow:hidden;
-}
 
 #search {
 	border: none;
 	width: 100%;
 	height: 100%;
-	padding: 5px 20px;
 	outline: 0;
 	background: none;
 	font-size: 12px;
@@ -540,38 +549,6 @@ input{
 	z-index: 2;
 	cursor: pointer;
 }
-
-
-
-/* FILTER */
-
-#filter{
-	top:89px;
-	border:none;
-	display: none
-} 
-
-#filter_ico{
-	position:absolute;
-	top:0;
-	right:7px;	
-} 
-
-#filter_lb{
-	color:#333;	
-}	
-
-#filter_hit{
-	position:absolute;
-	top:0;
-	left:0;
-	width:100%;
-	height:36px;
-	z-index:2;
-	cursor:pointer;
-}  
- 
-
 
 /* ITEM */
 
@@ -791,3 +768,7 @@ input{
 	bottom: 25px;
 	left: 70px;
 }
+
+/* ADJUSTMENTS */
+
+.mt20{ margin-top: 20px;}
