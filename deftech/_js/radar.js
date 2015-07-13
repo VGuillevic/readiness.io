@@ -177,14 +177,14 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 
 			display_settings.visible = false;
 
-			var settings_bt1 = document.getElementById('settings_bt1');
-			var settings_bt2 = document.getElementById('settings_bt2');
+			var setting1 = document.getElementById('setting1');
+			var setting2 = document.getElementById('setting2');
 
-			settings_bt1.map = document.getElementById("techs"); 
-			settings_bt2.map = document.getElementById("techs") 
+			setting1.map = document.getElementById("techs"); 
+			setting2.map = document.getElementById("techs") 
 
-			settings_bt1.on = true;
-			settings_bt2.on = false; 
+			setting1.on = true;
+			setting2.on = false; 
 
 			// SEARCH
 
@@ -431,27 +431,27 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 				}
 			}
 
-			settings_bt1.onclick = toggle_setting;
+			setting1.onclick = toggle_setting;
 
 			function toggle_starred(){ 
-				if(settings_bt2.on){
-					settings_bt2.on = false;
-					settings_bt2.style.color = theme.bt_label_off;
-					settings_bt2.style.background = theme.bt_bg_off;
-					settings_bt2.innerHTML = "OFF"; 
+				if(setting2.on){
+					setting2.on = false;
+					setting2.style.color = theme.bt_label_off;
+					setting2.style.background = theme.bt_bg_off;
+					setting2.innerHTML = "OFF"; 
 					only_starred = false;		
 					//startups_map();
 				}else{
-					settings_bt2.on = true;
-					settings_bt2.style.color = theme.bt_label_on;
-					settings_bt2.style.background = theme.bt_bg_on;
-					settings_bt2.innerHTML = "ON"; 
+					setting2.on = true;
+					setting2.style.color = theme.bt_label_on;
+					setting2.style.background = theme.bt_bg_on;
+					setting2.innerHTML = "ON"; 
 					only_starred = true;		
 					//startups_map(); 
 				} 
 			}  
 
-			settings_bt2.onclick = toggle_starred;
+			setting2.onclick = toggle_starred;
 
 			// search funcs  
 
@@ -1397,8 +1397,8 @@ $.getScript("_clients/" + client + "/theme.js", function(){
 			slider_circle.style.background = theme.slider; 
 			title.innerHTML = theme.title;
 
-			settings_bt2.style.color = theme.bt_label_off;
-			settings_bt2.style.background = theme.bt_bg_off; 
+			setting2.style.color = theme.bt_label_off;
+			setting2.style.background = theme.bt_bg_off; 
 
 			logo_client.src = "_clients/" + client + "/logo.png";
 

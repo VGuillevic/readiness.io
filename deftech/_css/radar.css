@@ -169,7 +169,7 @@ body, html{
 	height:42px;
 	position:absolute;
 	background-color:#fff;
-	border-radius:1px;
+	border-radius:2px;
 	cursor:pointer;
 	z-index:1;
 }
@@ -277,8 +277,8 @@ body, html{
 	right:10px;
 	overflow:auto;
 	overflow-x:hidden; 
-	border-bottom-left-radius:1px;
-	border-bottom-right-radius:1px;
+	border-bottom-left-radius:2px;
+	border-bottom-right-radius:2px;
 	border:#fff 1px solid;
 }
 
@@ -290,20 +290,44 @@ body, html{
  
 .setting{
 	width: 100%;
-	height: 42px;
+	height: 35px;
 	position: relative;
+	padding: 10px 20px;
+	overflow: hidden;
 }
+
+.setting.select{
+	border-top:#eee 1px solid;
+	padding: 13px 20px;
+	height: 42px;
+	height: 242px;
+}
+
+.setting.select ul{
+	margin-top: 15px;
+}
+
+.setting.select li{
+	margin-top: 5px;
+	opacity: .35; 
+	cursor: pointer;
+}
+
+.setting.select li.select{
+	opacity: 1;
+}
+
 
 .setting_lb{
 	font-size: 13px;
 	font-weight: 400;
-	padding: 24px;
+	cursor: pointer;
 }
 
 .setting_bt{
 	position: absolute;
-	right: 20px;
-	top: 18px;
+	left: 295px;
+	top: 5px;
 	width: 60px;
 	height: 24px;
 	background: #fff;
@@ -312,13 +336,17 @@ body, html{
 	overflow: hidden;
 	padding: 2px 0;
 	text-align: center;
-	cursor: pointer;
 	font-weight: 300;
 	font-size: 12px;
 	text-overflow: clip;
 	white-space: nowrap;
 	border: #ccc 1px solid;
+	pointer-events: none;
 }  
+
+.setting_result{
+	font-weight: 700;
+}
 
 .settings_bt_lb {
 	position: absolute;
@@ -366,18 +394,7 @@ body, html{
 	position: absolute;
 	right: 40px;
 	top: 14px;
-}
-
-input{
-	width: 250px;
-	background: #fff;
-	border-radius: 3px;
-	float: right;
-	border: none;
-	font-size: 14px;
-	position: relative;
-	top: -10px;
-}
+} 
 
 .setting_bt2{
 	margin-bottom: 10px;
@@ -473,18 +490,21 @@ input{
 	height: 42px;
 	width:380px;
 	top: 10px;
-	background: #fff;
-	border-top-left-radius:1px;
-	border-top-right-radius:1px;
-	border-bottom:#eee 1px solid;
+	border-top-left-radius:2px;
+	border-top-right-radius:2px;
 	background:#fff;
 	overflow:hidden; 
-	padding: 14px 25px;
-	font-size: 14px;
+	border-bottom:#eee 1px solid;
 } 
 
 .display_right .display_header{left:0;}
 .display_left .display_header{right:0;}
+
+.display_header.title{
+	padding: 14px 20px;
+	font-size: 14px;
+	font-weight: 700
+}
 
 /* SEARCH */ 
 
@@ -525,13 +545,13 @@ input{
 	cursor:pointer;
 }  
 
+
 .label{
 	padding-left:20px;
 	width:100%;
 	display:table-cell;
 	vertical-align:middle;
 } 
- 
 
 #search {
 	border: none;
@@ -540,7 +560,10 @@ input{
 	outline: 0;
 	background: none;
 	font-size: 12px;
-	margin-top: 10px;
+	overflow: hidden;
+	text-overflow:clip;
+	white-space:nowrap;
+	padding: 14px 20px;
 }
 
 #search_ico{
@@ -771,4 +794,7 @@ input{
 
 /* ADJUSTMENTS */
 
+.mt40{ margin-top: 40px;}
 .mt20{ margin-top: 20px;}
+.mb10{ margin-bottom: 10px;}
+.bb{border-bottom:#eee 1px solid;}
